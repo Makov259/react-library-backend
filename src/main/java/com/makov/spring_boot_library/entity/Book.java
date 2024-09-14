@@ -1,7 +1,7 @@
 package com.makov.spring_boot_library.entity;
 import lombok.Data;
 import jakarta.persistence.*;
-
+//the book entity test comment for source control test
 @Entity
 @Table(name= "book")
 @Data
