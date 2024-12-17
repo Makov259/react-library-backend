@@ -11,5 +11,11 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
         Page<Book> findByCategory(@RequestParam("category") String category , Pageable pageable);
 
+        Page<Book> findByAuthorContaining(@RequestParam("author") String author, Pageable pageable);
+
+        Page<Book> findByTitleContainingOrAuthorContaining(@RequestParam("title") String title,
+                                                           @RequestParam("author") String author,
+                                                           Pageable pageable);
+
 
 }
