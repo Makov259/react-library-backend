@@ -51,6 +51,17 @@ public class BookService {
         checkoutRepository.save(checkout);
         return book.get();
     }
+
+    public void returnBook(String userEmail, Long bookId) throws Exception {
+        Optional<Book> book = bookRepository.findById(bookId);
+        Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+
+        if(!book.isPresent() || validateCheckout == null ) {throw new Exception("Book does not exist or not checked out by user.");}
+
+        book.get().setCopiesAvailable(book.get().getCopiesAvailable() + 1);
+        bookRepository.save(book.get());
+        checkoutRepository.deleteById(validateCheckout.getId());
+    }
 /*----------------------------------------------------------------------------------------------------------------------------------*/
     public Boolean checkoutBookByUser(String userEmail, Long bookId) {
         Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
@@ -96,4 +107,5 @@ public class BookService {
         }
         return shelfCurrentLoansResponses;
     }
+
 }
